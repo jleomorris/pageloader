@@ -38,14 +38,6 @@ const item = {
 };
 
 const Loader = ({ setLoading }) => {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 4000);
-
-    return () => clearTimeout(timer);
-  });
-
   return (
     <div className='loader'>
       <motion.div
@@ -54,6 +46,7 @@ const Loader = ({ setLoading }) => {
         initial='hidden'
         animate='show'
         exit='exit'
+        onAnimationComplete={() => setLoading(false)}
       >
         <ImageBlock variants={item} id='image-1' />
         <div className='transition-image'>
