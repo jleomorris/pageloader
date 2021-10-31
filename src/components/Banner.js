@@ -84,10 +84,10 @@ const Banner = () => {
   );
 };
 
-const AnimatedLetters = ({ title }) => (
+const AnimatedLetters = ({ title, disabled }) => (
   <motion.span
     className='row-title'
-    variants={banner}
+    variants={disabled ? null : banner}
     initial='initial'
     animate='animate'
   >
@@ -153,10 +153,10 @@ const BannerRowCenter = ({ title, playMarquee }) => {
   return (
     <div className={`banner-row marquee  ${playMarquee && 'animate'}`}>
       <div className='marquee__inner'>
+        <AnimatedLetters title={title} disabled />
         <AnimatedLetters title={title} />
-        <AnimatedLetters title={title} />
-        <AnimatedLetters title={title} />
-        <AnimatedLetters title={title} />
+        <AnimatedLetters title={title} disabled />
+        <AnimatedLetters title={title} disabled />
       </div>
     </div>
   );
