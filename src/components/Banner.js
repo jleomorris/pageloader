@@ -1,4 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+// Animation
+import { motion } from 'framer-motion';
+
+// Variants
+const banner = {
+  animate: {
+    transition: {
+      delayChildren: 0.4,
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const letterAnimation = {
+  initial: {
+    y: 400,
+  },
+  animate: {
+    y: 0,
+    transition: {
+      ease: [0.6, 0.01, -0.05, 0.95],
+      duration: 1,
+    },
+  },
+};
+
+const bannerRowTop = {
+  initial: {
+    opacity: 0,
+    y: 80,
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      ease: 'easeInOut',
+      duration: 1,
+      delay: 0.4,
+    },
+  },
+};
 
 const Banner = () => {
   const [playMarquee, setPlayMarquee] = useState(false);
@@ -7,42 +48,54 @@ const Banner = () => {
     setPlayMarquee(true);
   }, []);
   return (
-    <div className="banner">
-      <BannerRowTop title={"brand"} />
-      <BannerRowCenter title={"experience"} playMarquee={playMarquee} />
-      <BannerRowBottom title={"studio"} />
-    </div>
+    <motion.div className='banner' variants={banner} animate='animate'>
+      <BannerRowTop title={'brand'} />
+      <BannerRowCenter title={'experience'} playMarquee={playMarquee} />
+      <BannerRowBottom title={'studio'} />
+    </motion.div>
   );
 };
 
 const AnimatedLetters = ({ title }) => (
-  <span className="row-title">
+  <motion.span
+    className='row-title'
+    variants={banner}
+    initial='initial'
+    animate='animate'
+  >
     {[...title].map((letter) => (
-      <span className="row-letter">{letter}</span>
+      <motion.span className='row-letter' variants={letterAnimation}>
+        {letter}
+      </motion.span>
     ))}
-  </span>
+  </motion.span>
 );
 
 const BannerRowTop = ({ title }) => {
   return (
-    <div className={"banner-row"}>
-      <div className="row-col">
+    <div className={'banner-row'}>
+      <div className='row-col'>
         <AnimatedLetters title={title} />
       </div>
-      <div className="row-col">
-        <span className="row-message">
+      <motion.div
+        className='row-col'
+        variants={bannerRowTop}
+        initial='initial'
+        animate='animate'
+      >
+        <span className='row-message'>
           We are specialised in setting up the foundation of your brand and
           setting you up for success.
         </span>
-      </div>
+      </motion.div>
     </div>
   );
 };
 
 const BannerRowBottom = ({ title }) => {
   return (
-    <div className={"banner-row center"}>
-      <div className="scroll">
+    <div className={'banner-row center'}>
+      <div className='scroll'>
         <span>scroll</span>
         <span>down</span>
       </div>
@@ -53,8 +106,8 @@ const BannerRowBottom = ({ title }) => {
 
 const BannerRowCenter = ({ title, playMarquee }) => {
   return (
-    <div className={`banner-row marquee  ${playMarquee && "animate"}`}>
-      <div className="marquee__inner">
+    <div className={`banner-row marquee  ${playMarquee && 'animate'}`}>
+      <div className='marquee__inner'>
         <AnimatedLetters title={title} />
         <AnimatedLetters title={title} />
         <AnimatedLetters title={title} />
